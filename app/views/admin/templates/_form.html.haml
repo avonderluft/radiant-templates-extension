@@ -28,7 +28,7 @@
     = f.collection_select :layout_id, Layout.find(:all), :id, :name, :include_blank => false
   %p
     %label{:for => "template_page_class_name"} Page Class (type)
-    = f.collection_select :page_class_name, Page.descendants, :name, :display_name, :include_blank => false, :prompt => "&lt;normal&gt;"
+    = f.collection_select :page_class_name, Page.descendants, :name, :display_name, :include_blank => "&lt;normal&gt;"
 
 %p.buttons
   = submit_tag(current_object.new_record? ? "Create template" : "Save template", :class => "button")
