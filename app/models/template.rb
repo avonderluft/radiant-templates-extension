@@ -1,11 +1,5 @@
 class Template < ActiveRecord::Base
   acts_as_list
-  begin
-    order_by "position ASC"  ## backward compatible with 0.7
-  rescue
-    default_scope :order => "position ASC"
-  end
-  
   class << self
     def reordering
       @reordering = true
@@ -17,14 +11,20 @@ class Template < ActiveRecord::Base
       @reordering
     end
   end
-  
+
+  # Default Order
+  default_scope :order => "position ASC"
+
+  # Associations
   has_many :pages, :dependent => :nullify
   has_many :template_parts, :dependent => :destroy, :order => "id ASC"
   belongs_to :layout
-  
+
+  # Validations
   validates_presence_of :name, :layout_id
   validate :valid_page_class_name
-  
+
+  # Callbacks
   before_validation :create_template_parts
   after_update :update_pages
   
@@ -35,7 +35,7 @@ class Template < ActiveRecord::Base
       template_parts_without_hash=(value)
     end
   end
-  
+
   alias_method_chain :template_parts=, :hash
   
   private

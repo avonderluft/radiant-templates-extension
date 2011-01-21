@@ -1,0 +1,15 @@
+%h1= t('remove_template')
+%p= t('text.templates.remove_warning')
+
+%table.index#templates
+  %tbody
+    %tr.node.level_1
+      %td.template
+        = image('template', :alt => "")
+        %span.title= current_object.name
+
+- form_for [:admin, current_object], :html => {:method => :delete, 'data-onsubmit_status'=>"Removing template&#8230;"} do
+  %p.buttons
+    %input.button{:type=>"submit", :value => t('delete_template')}/
+    = t('or')
+    = link_to t('cancel'), admin_templates_url

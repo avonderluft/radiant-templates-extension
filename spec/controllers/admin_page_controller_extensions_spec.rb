@@ -9,7 +9,7 @@ describe Admin::PagesController, "edit view controlled by templates" do
     @page = pages(:home)
     @page.template = templates(:sample)
     @page.stub!(:children).and_return([])
-    login_as :developer
+    login_as :designer
   end
   
   def do_get

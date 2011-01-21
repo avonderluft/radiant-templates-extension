@@ -1,0 +1,3 @@
+- unless simple
+  - type_show = page.template_name.length > 12 ? "#{page.template_name.slice(0...9)}..."  : page.template_name
+  %td.status{:title => page.template_name, :style => "white-space:nowrap"}= type_show

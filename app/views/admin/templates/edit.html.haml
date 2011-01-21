@@ -1,3 +1,10 @@
-%h1 Edit Template
-- form_for :template, current_object, :url => admin_template_path(current_object), :html => {:method => :put } do |f|
-  = render :partial => 'form', :locals => {:f => f}
+- @page_title = current_object.name + ' ' + t('template') + ' - ' + default_page_title
+
+- render_region :main do |main|
+  - main.edit_header do
+    %h1= t('edit_template')
+  - main.edit_form do
+    - form_for :template, current_object, :url => admin_template_path(current_object), :html => {:method => :put , 'data-onsubmit_status' => onsubmit_status(current_object)} do |f|
+      = render :partial => 'form', :locals => {:f => f}
+
+- content_for 'page_scripts', template_edit_javascripts

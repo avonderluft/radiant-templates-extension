@@ -1,6 +1,2 @@
-%h2 
-  New Template Part Type ( 
-  %span{:style => 'color:red'} Admin only!
-  )
-- form_for :part_type, current_object, :url => admin_part_types_path do |f|
-  = render :partial => 'form', :locals => {:f => f}
+%h1= t('new_part_type')
+= render :partial => 'form'

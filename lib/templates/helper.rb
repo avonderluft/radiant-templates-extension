@@ -1,24 +1,22 @@
 module Templates::Helper
 
-  def gt8; Radiant::Version.to_s >= "0.8" end 
-  
   def page_part_name(index)
-    gt8 ? "page[parts_attributes][#{index}]" : "page[parts][]" 
+    "page[parts_attributes][#{index}]"
   end
   
   def template_part_field(template_part, index, drafts_enabled = false)
     field_html = []
     if drafts_enabled
-      live_part_content = gt8 ? @page.part(template_part.name).try(:content) || '' : @page.part(template_part.name).content rescue ''
+      live_part_content = @page.part(template_part.name).try(:content) || '' rescue ''
       live_field_name = "#{page_part_name(index)}[content]"
       live_field_id = "page_parts_#{index}_content"
       # part_content = @page.part(template_part.name).try(:draft_content) || ''
-      part_content = gt8 ? @page.part(template_part.name).try(:draft_content) || '' : @page.part(template_part.name).draft_content rescue ''
+      part_content = @page.part(template_part.name).try(:draft_content) || '' rescue ''
       field_name = "#{page_part_name(index)}[draft_content]"
       field_id = "page_parts_#{index}_draft_content"
       field_html << hidden_field_tag(live_field_name, h(live_part_content), :id => live_field_id)
     else
-      part_content = gt8 ? @page.part(template_part.name).try(:content) || '' : @page.part(template_part.name).content rescue ''
+      part_content = @page.part(template_part.name).try(:content) || '' rescue ''
       field_name = "#{page_part_name(index)}[content]"
       field_id = "page_parts_#{index}_content"
     end
@@ -48,6 +46,23 @@ module Templates::Helper
     end
 
     field_html.join("\n")
+  end
+
+  def child_menu_for(page)
+    children = children_for(page)
+    return nil if children.size < 2
+    children.unshift(children.delete(page.default_child), :separator) if children.include?(page.default_child)
+    name_for = proc { |p| (name = p.name.to_name('Page')).blank? ? t('blank_page') : name }
+    content_tag :ul, :class => 'menu', :id => "allowed_children_#{page.id}" do
+      children.map do |child|
+        if child == :separator
+          content_tag :li, nil, :class => 'separator'
+        else
+          info = child.name.eql?("Page") ? "Add child as 'Blank Page'" : "Add child as '#{child.name}' Page"
+          content_tag :li, link_to(name_for[child], new_admin_page_child_path(page, :template => child), :title => info)
+        end
+      end
+    end
   end
 
 end

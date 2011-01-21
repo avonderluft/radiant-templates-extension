@@ -7,7 +7,7 @@ describe Admin::TemplatesController do
   dataset :users
 
   before :each do
-    login_as :developer
+    login_as :designer
   end
 
   it "should require login for all actions" do
@@ -33,7 +33,7 @@ describe Admin::TemplatesController do
       Template.stub!(:new).and_return(@template)
     end
     
-    [:admin, :developer].each do |user|
+    [:admin, :designer].each do |user|
       describe "#{user} user" do
         before :each do
           login_as user
@@ -64,6 +64,11 @@ describe Admin::TemplatesController do
           response.should be_success
         end
 
+        it "show should redirect to the edit action" do
+          get :show, :id => 1
+          response.should redirect_to(edit_admin_template_path(params[:id]))
+        end
+
         it 'should have access to the update action' do
           put :update, :id => 1
           redirects_to_index
@@ -92,7 +97,7 @@ describe Admin::TemplatesController do
         def redirects_to_pages
           response.should be_redirect
           response.should redirect_to(admin_pages_path)
-          flash[:error].should == 'You must have developer privileges to perform this action.'
+          flash[:error].should == 'You must have designer privileges to perform this action.'
         end
 
         it 'should not have access to the index action' do

@@ -1,252 +1,89 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
-# Re-raise errors caught by the controller.
-Admin::PartTypesController.class_eval { def rescue_action(e) raise e end }
-
 describe Admin::PartTypesController do
-  dataset :users
+  dataset :users, :part_types
 
   before :each do
     login_as :admin
   end
 
-  it "should require login for all actions" do
-    logout
-    lambda { get :index }.should                    require_login
-    lambda { get :new }.should                      require_login
-    lambda { get :edit, :id => 1 }.should           require_login
-    lambda { post :create }.should                  require_login
-    lambda { put :update, :id => 1 }.should         require_login
-    lambda { delete :destroy, :id => 1 }.should     require_login
+  it "should be a ResourceController" do
+    controller.should be_kind_of(Admin::ResourceController)
   end
 
-  describe "Access control" do
-    before :each do
-      @part_type = mock_model(PartType, :save => true, :update_attributes => true,
-                                  :destroy => true)
-      PartType.stub!(:find).and_return(@part_type)
-      PartType.stub!(:new).and_return(@part_type)
+  it "should handle PartTypes" do
+    controller.class.model_class.should == PartType
+  end
+
+  describe "show" do
+    it "should redirect to the edit action" do
+      get :show, :id => 1
+      response.should redirect_to(edit_admin_part_type_path(params[:id]))
     end
-    
-    [:admin].each do |user|
-      describe "#{user} user" do
-        before :each do
-          login_as user
-        end
 
-        def redirects_to_index
-          response.should be_redirect
-          response.should redirect_to(admin_templates_path + "#part_types")
-        end
+    it "should show xml when format is xml" do
+      part_type = PartType.first
+      get :show, :id => part_type.id, :format => "xml"
+      response.body.should == part_type.to_xml
+    end
+  end
 
-        it 'should have access to the index action' do
-          get :index
-          response.should be_success
-        end
-
-        it 'should have access to the new action' do
-          get :new
-          response.should be_success
-        end
-
-        it 'should have access to the create action' do
-          post :create
-          redirects_to_index
-        end
-
-        it 'should have access to the edit action' do
-          get :edit, :id => 1
-          response.should be_success
-        end
-
-        it 'should have access to the update action' do
-          put :update, :id => 1
-          redirects_to_index
-        end
-
-        it 'should have access to the destroy action' do
-          delete :destroy, :id => 1
-          redirects_to_index
-        end
-
+  describe "with invalid page id" do
+    [:edit, :remove].each do |action|
+      before do
+        @parameters = {:id => 999}
+      end
+      it "should redirect the #{action} action to the index action" do
+        get action, @parameters
+        response.should redirect_to(admin_part_types_path)
+      end
+      it "should say that the 'Part Type could not be found.' after the #{action} action" do
+        get action, @parameters
+        flash[:notice].should == 'Part Type could not be found.'
       end
     end
+    it 'should redirect the update action to the index action' do
+      put :update, @parameters
+      response.should redirect_to(admin_part_types_path)
+    end
+    it "should say that the 'Part Type could not be found.' after the update action" do
+      put :update, @parameters
+      flash[:notice].should == 'Part Type could not be found.'
+    end
+    it 'should redirect the destroy action to the index action' do
+      delete :destroy, @parameters
+      response.should redirect_to(admin_part_types_path)
+    end
+    it "should say that the 'Part Type could not be found.' after the destroy action" do
+      delete :destroy, @parameters
+      flash[:notice].should == 'Part Type could not be found.'
+    end
+  end
 
-    [:existing, :non_admin, :developer].each do |user|
-      describe "#{user} user" do
-        before :each do
-          login_as user
-        end
+  { :get => [:index, :new, :edit, :remove],
+    :post => [:create],
+    :put => [:update],
+    :delete => [:destroy] }.each do |method, actions|
+    actions.each do |action|
+      it "should require login to access the #{action} action" do
+        logout
+        lambda { send(method, action).should require_login }
+      end
 
-        def redirects_to_pages
-          response.should be_redirect
-          response.should redirect_to(admin_pages_path)
-          flash[:error].should == 'You must have admin privileges to perform this action.'
-        end
+      it "should allow access to admins for the #{action} action" do
+        lambda {
+          send(method, action, :id => part_type_id(:one_line))
+        }.should restrict_access(:allow => [users(:admin)],
+                                 :url => '/admin/pages')
+      end
 
-        it 'should not have access to the index action' do
-          get :index
-        end
-
-        it 'should not have access to the new action' do
-          get :new
-        end
-
-        it 'should not have access to the create action' do
-          post :create
-        end
-
-        it 'should not have access to the edit action' do
-          get :edit, :id => 1
-        end
-
-        it 'should not have access to the update action' do
-          put :update, :id => 1
-        end
-
-        it 'should not have access to the destroy action' do
-          delete :destroy, :id => 1
-        end
-
-        after :each do
-          redirects_to_pages
-        end
+      it "should deny non-admins for the #{action} action" do
+        lambda {
+          send(method, action, :id => part_type_id(:plaintext))
+        }.should restrict_access(:deny => [users(:non_admin), users(:existing)],
+                                 :url => '/admin/pages')
       end
     end
   end
-  
-  describe "GET to /admin/templates/part_types/new" do
-    def do_get
-      get :new
-    end
-    
-    it "should load a new part type" do
-      do_get
-      assigns[:part_type].should_not be_nil
-      assigns[:part_type].should be_new_record
-    end
-    
-    it "should render the new part type" do
-      do_get
-      response.should render_template('new')
-    end
-  end
-  
-  describe "GET to /admin/templates/part_types/1/edit" do
-    before :each do
-      @part_type = mock_model(PartType)
-      PartType.should_receive(:find).with('1').at_least(:once).and_return(@part_type)
-    end
-    
-    def do_get
-      get :edit, :id => '1'
-    end
-    
-    it "should load the existing part type" do
-      do_get
-      assigns[:part_type].should == @part_type
-    end
-    
-    it "should render the edit part type" do
-      do_get
-      response.should render_template('edit')
-    end
-  end
-  
-  describe "POST to /admin/templates/part_types" do
-    before :each do
-      @part_type = mock_model(PartType)
-      PartType.should_receive(:new).at_least(:once).and_return(@part_type)
-    end
-    
-    def do_post
-      post :create
-    end
-    
-    describe "success path" do
-      before :each do
-        @part_type.should_receive(:save).and_return(true)
-      end
-      
-      it "should redirect to the index" do
-        do_post
-        response.should redirect_to('/admin/templates#part_types')
-      end
-    end
-    
-    describe "failure path" do
-      before :each do
-        @part_type.should_receive(:save).and_return(false)
-      end
-      
-      it "should add a flash error message" do
-        do_post
-        flash[:error].should be
-      end
-      
-      it "should render the new part_type again" do
-        do_post
-        response.should render_template('new')
-      end
-    end
-  end
-  
-  describe "PUT to /admin/templates/part_types/1" do
-    before :each do
-      @part_type = mock_model(PartType)
-      PartType.should_receive(:find).with('1').at_least(:once).and_return(@part_type)
-    end
-    
-    def do_put
-      put :update, :id => '1'
-    end
-    
-    describe "success path" do
-      before :each do
-        @part_type.should_receive(:update_attributes).and_return(true)
-      end
-      
-      it "should redirect to the index" do
-        do_put
-        response.should redirect_to('/admin/templates#part_types')
-      end
-    end
-    
-    describe "failure path" do
-      before :each do
-        @part_type.should_receive(:update_attributes).and_return(false)
-      end
-      
-      it "should add a flash error message" do
-        do_put
-        flash[:error].should be
-      end
-      
-      it "should render the edit part type again" do
-        do_put
-        response.should render_template('edit')
-      end
-    end
-  end
-  
-  describe "DELETE to /admin/templates/part_types/1" do
-    before :each do
-      @part_type = mock_model(PartType, :destroy => true)
-      PartType.should_receive(:find).with('1').at_least(:once).and_return(@part_type)
-    end
-    
-    def do_delete
-      delete :destroy, :id => '1'
-    end
-    
-    it "should destroy the part type" do
-      @part_type.should_receive(:destroy).and_return(true)
-      do_delete
-    end
-    
-    it "should redirect to the index" do
-      do_delete
-      response.should redirect_to('/admin/templates#part_types')
-    end
-  end
+
 end

@@ -1,3 +1,9 @@
-%h2 New Template
-- form_for :template, current_object, :url => admin_templates_path do |f|
-  = render :partial => 'form', :locals => {:f => f}
+- render_region :main do |main|
+  - main.edit_header do
+    %h1= t('new_template')
+  - main.edit_form do
+    - form_for :template, current_object, :url => admin_templates_path, :html => {'data-onsubmit_status' => onsubmit_status(current_object)} do |f|
+      = render :partial => 'form', :locals => {:f => f}
+
+- content_for 'page_scripts', template_edit_javascripts
+

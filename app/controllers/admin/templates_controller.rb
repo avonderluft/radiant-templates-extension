@@ -1,13 +1,17 @@
 class Admin::TemplatesController < ApplicationController
-    
-  only_allow_access_to :index, :new, :edit, :create, :update, :destroy, :move_higher, :move_lower, :move_to_top, :move_to_bottom,
-    :when => [:developer, :admin],
-    :denied_url => '/admin/pages',
-    :denied_message => 'You must have developer privileges to perform this action.'
+
+  only_allow_access_to :index, :show, :new, :create, :edit, :update, :remove, :destroy, :move_higher, :move_lower, :move_to_top, :move_to_bottom,
+    :when => [:designer, :admin],
+    :denied_url => { :controller => 'admin/pages', :action => 'index' },
+    :denied_message => 'You must have designer privileges to perform this action.'
 
   make_resourceful do
-    actions :index, :new, :create, :edit, :update, :destroy
-  
+    actions :index, :show, :new, :create, :edit, :update, :remove, :destroy
+
+    response_for(:show) do |format|
+      format.html { redirect_to edit_admin_template_url }
+    end
+
     response_for(:create, :update, :destroy, :destroy_fails) do |format|
       format.html { redirect_to objects_path }
     end

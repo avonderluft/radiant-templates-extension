@@ -1,41 +1,65 @@
-%p.buttons
-  = submit_tag(current_object.new_record? ? "Create template" : "Save template", :class => "button")
-  or
-  = link_to "cancel", objects_path
+-#= f.hidden_field :lock_version # for optimistic locking. Not yet implemented for templates
+= render_region :form_top, :locals => {:f => f}
+.form_area
+  - render_region :form, :locals => {:f => f} do |form|
+    - form.edit_title do
+      %p.title
+        = f.label :name, t('name')
+        = f.text_field :name, :class => 'textbox activate', :maxlength => 100
+    - form.edit_content do
+      %p.content
+        %label
+          %span= t('parts')
+          = link_to_function image_tag("admin/plus.png") + ' ' + t('add_part'), "new_template_part()", :class => 'action', :style => "float: right"
+        %table.index#templates
+          %thead
+            %tr
+              %th.template_name= t('name')
+              %th.description= t('description')
+              %th.part_type= t('type')
+              %th.filter= t('filter')
+              %th.modify= t('modify')
+              %th.reorder= t('order')
+          %tbody#parts
+            = render :partial => "template_part", :collection => current_object.template_parts
+        %p.structure
+          = f.label :structure, t('structure')
+          = find_and_preserve(f.text_area(:content, :class => "textarea", :style => "width:100%"))
 
-.form-area
-  %p.title
-    %label{:for => "template_name"} Template name
-    = f.text_field :name, :class => "textbox", :style => "width: 100%;"
-  = focus 'template_name'
-  %h2 Parts
-  %table.index
-    %thead
-      %tr
-        %th.name Name
-        %th.description Description
-        %th.part_type Type
-        %th.filter Filter
-        %th.controls
-          = link_to_function "Add", "new_template_part()", :style => "background: url(/images/admin/plus.png) left center no-repeat; padding-left: 16px; text-decoration: none; color: black;"
-    %tbody#parts
-      = render :partial => "template_part", :collection => current_object.template_parts
-  %h2 Structure
-  %p
-    = find_and_preserve(f.text_area(:content, :class => "textarea", :style => "width: 100%"))
-  %p
-    %label{:for => "template_layout_id"} Layout
-    = f.collection_select :layout_id, Layout.find(:all), :id, :name, :include_blank => false
-  %p
-    %label{:for => "template_page_class_name"} Page Class (type)
-    = f.collection_select :page_class_name, Page.descendants, :name, :display_name, :include_blank => "&lt;normal&gt;"
+  .set
+    - render_region :layout, :locals => {:f => f} do |layout|
+      - layout.edit_layout do
+        %p
+          = f.label :layout_id, t('layout')
+          = f.collection_select :layout_id, Layout.find(:all), :id, :name, :include_blank => false
+      - layout.edit_type do
+        %p
+          = f.label :class_name, t('page_type')
+          = f.collection_select :page_class_name, Page.descendants, :name, :display_name, :include_blank => "&lt;normal&gt;"
 
-%p.buttons
-  = submit_tag(current_object.new_record? ? "Create template" : "Save template", :class => "button")
-  or
-  = link_to "cancel", objects_path
-  
-- content_for :page_scripts do
-  = templates_scripts
+  - render_region :form_bottom, :locals => {:f => f} do |form_bottom|
+    - form_bottom.edit_buttons do
+      %p.buttons{:style=>"clear: left"}
+        = save_model_button(current_object)
+        = save_model_and_continue_editing_button(current_object)
+        = t('or')
+        = link_to t('cancel'), admin_templates_url
+    - form_bottom.edit_timestamp do
+      = updated_stamp current_object
+%br
 
-= render :partial => 'templates_css'
+- if admin?
+  - render_region :bottom do |bottom|
+    - bottom.parts_button do
+      #actions
+        %ul
+          %li= link_to image('plus') + " " + t('edit_part_types'), admin_part_types_url
+
+- content_for :page_css do
+  :sass
+    .template_part
+      background: white
+      label
+        display: none
+    .inline
+      display: inline-block

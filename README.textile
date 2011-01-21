@@ -2,6 +2,7 @@ h1. Templates
 
 h2. Revision History
 
+* 0.9 - Radiant 0.9 compatible and tested, January 2011 - Blade UI, i18n
 * Radiant 0.8 compatible and tested, May 2010
 * Refactored to standard structure under /admin, admin UI for Part Types added, backward compatibility to < 0.8, by Andrew vonderLuft, November 2009, 
 * Refactored by Sean Cribbs, August 2008
@@ -51,6 +52,9 @@ This allows my Layout to serve as a wireframe for the whole site, with
 many different page designs filling the "content well".  I would only
 need a single <r:content /> tag within the layout to accomplish this.
 
+h2. To do
+
+* add created_by and updated_by
 
 h2. Acknowledgments
 

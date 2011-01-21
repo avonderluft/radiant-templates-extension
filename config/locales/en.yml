@@ -1,0 +1,32 @@
+---
+en:
+  blank_page: "Blank Page"
+  delete_part_type: "Delete Part Type"
+  delete_template: "Delete Template"
+  edit_template: "Edit Template"
+  edit_part_type: "Edit Part Type"
+  edit_part_types:  "Edit Part Types"
+  existing_part_types: "Existing Part Types"
+  field_class: "Field Class"
+  field_styles: "Field Styles"
+  field_type: "Field Type"
+  new_part_type: "New Part Type"
+  new_template: "New Template"
+  no_part_types: "No Part Types"
+  no_templates: "No Templates"
+  order: "Order"
+  template: "Template"
+  templates: "Templates"
+  parttype: "Part Type"
+  part_type: "Part Type"
+  part_types: "Part Types"
+  parts: "Parts"
+  remove_part_type: "Remove Part Type"
+  remove_template: "Remove Template"
+  reorder: "Reorder"
+  structure: "Structure"
+  text:
+    templates:
+      remove_warning: 'Are you sure you want to <strong class="warning">permanently remove</strong> the following template?'
+    part_types:
+      remove_warning: 'Are you sure you want to <strong class="warning">permanently remove</strong> the following template part type?<br/><h1><strong class="warning">This will break any existing templates which use this type</strong></h1>'
