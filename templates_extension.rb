@@ -25,12 +25,12 @@ class TemplatesExtension < Radiant::Extension
       add_item "Template Part Types", "/admin/part_types", :after => "Templates"
     end
     # Admin UI customization
-    admin.page.edit.add :extended_metadata, 'switch_templates', :after => 'breadcrumb'
-    admin.page.edit.add :form, 'edit_template', :before => 'edit_page_parts'
-    admin.page.edit.parts_bottom.delete 'edit_layout_and_type'
-    admin.page.edit.form.delete 'edit_page_parts'
     admin.page.index.add :node, 'template_column', :after => 'title_column'
     admin.page.index.add :sitemap_head, 'template_column_header', :after => 'title_column_header'
+    admin.page.edit.add :extended_metadata, 'switch_templates', :after => 'breadcrumb'
+    admin.page.edit.add :form, 'edit_template', :before => 'edit_page_parts'
+    admin.page.edit.form.delete 'edit_page_parts'
+    admin.page.edit.parts_bottom.delete 'edit_layout_and_type'
 
     Radiant::AdminUI.class_eval do
       attr_accessor :template

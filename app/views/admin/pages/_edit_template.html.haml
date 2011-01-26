@@ -12,7 +12,7 @@
   - @content_template.template_parts.each_with_index do |part, index|
     = render :partial => "edit_template_part", :object => part, :locals => {:index => index + 1}
   = render_region :parts_bottom
-  
+
 - else
   = defaults['edit_page_parts']
   = hidden_field 'page', 'template_id', :value => nil
