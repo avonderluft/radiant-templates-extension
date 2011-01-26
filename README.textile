@@ -54,6 +54,7 @@ need a single <r:content /> tag within the layout to accomplish this.
 
 h2. To do
 
+* fix Save and Continue to remain on edit form
 * add created_by and updated_by
 
 h2. Acknowledgments

@@ -1,4 +1,3 @@
-- include_stylesheet 'admin/templates'
 .clear
 .template_part{ :id => "part_" + edit_template_part.name.gsub(/\W/, "_"), :style => (edit_template_part.part_type.field_type == 'predefined' ? "display:none" : nil) }
   = hidden_field_tag "#{page_part_name(index)}[name]", edit_template_part.name, :id => "page_parts_#{index}_name"
@@ -7,11 +6,15 @@
   %p
     %label{:for => "page_parts_#{index}_content"}
       = edit_template_part.name.humanize
-      %span.reference_links{:style => "float:right"}
-        = t('reference')
-        %span{:id => "filter_reference_link_#{edit_template_part.name.to_slug}"}
-          = link_to_function t('filter'), "loadFilterReference('#{edit_template_part.name.to_slug}');"
-        %span{:id => "tag_reference_link_#{edit_template_part.name.to_slug}"}
-          = link_to_function t('available_tags'), "loadTagReference('#{edit_template_part.name.to_slug}');"
-    %span.description= escape_once(edit_template_part.description)
-    = find_and_preserve(template_part_field(edit_template_part, index, defined?(ConcurrentDraftExtension)))
+      - unless edit_template_part.description.blank?
+        %span.description= " - " + escape_once(edit_template_part.description)
+      - if edit_template_part.part_type.field_type.include?('text')
+        %span.reference_links{:style => "float:right"}
+          = t('reference')
+          - unless edit_template_part.filter_id.blank?
+            = hidden_field_tag "part_#{edit_template_part.name.to_slug}_filter_id", edit_template_part.filter_id, :id => "part_#{edit_template_part.name.to_slug}_filter_id"
+            %span{:id => "filter_reference_link_#{edit_template_part.name}"}
+              = link_to_function t('filter'), "loadFilterReference('#{edit_template_part.name}');"
+          %span{:id => "tag_reference_link_#{edit_template_part.name.to_slug}"}
+            = link_to_function t('available_tags'), "loadTagReference('#{edit_template_part.name.to_slug}');"
+      = find_and_preserve(template_part_field(edit_template_part, index, defined?(ConcurrentDraftExtension)))

@@ -35,8 +35,18 @@
     %label{:for=>"page_published_at"}
       Published At
     = datetime_select "page", "published_at", :disabled => true
-  
+
 - content_for :page_css do
   :sass
-    #content .textarea, #content .text
-      :width 100%
+    .template_part
+      padding: 6px 0
+      border-bottom: 1px solid #DFDCD1
+      width: 100%
+      label
+      textarea.textarea
+        display: block
+      input.text
+        display: block
+        padding: 2px 0
+        font-size: 16px
+        width: 500px
