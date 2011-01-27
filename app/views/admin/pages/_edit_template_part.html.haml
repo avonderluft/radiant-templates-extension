@@ -8,13 +8,13 @@
       = edit_template_part.name.humanize
       - unless edit_template_part.description.blank?
         %span.description= " - " + escape_once(edit_template_part.description)
-      - if edit_template_part.part_type.field_type.include?('text')
+      - if edit_template_part.part_type.field_class.include?('text')
         %span.reference_links{:style => "float:right"}
           = t('reference')
           - unless edit_template_part.filter_id.blank?
             = hidden_field_tag "part_#{edit_template_part.name.to_slug}_filter_id", edit_template_part.filter_id, :id => "part_#{edit_template_part.name.to_slug}_filter_id"
             %span{:id => "filter_reference_link_#{edit_template_part.name}"}
-              = link_to_function t('filter'), "loadFilterReference('#{edit_template_part.name}');"
+              = link_to_function t('filter'), "loadFilterReference('#{edit_template_part.name}');", :title => edit_template_part.filter_id
           %span{:id => "tag_reference_link_#{edit_template_part.name.to_slug}"}
             = link_to_function t('available_tags'), "loadTagReference('#{edit_template_part.name.to_slug}');"
       = find_and_preserve(template_part_field(edit_template_part, index, defined?(ConcurrentDraftExtension)))
