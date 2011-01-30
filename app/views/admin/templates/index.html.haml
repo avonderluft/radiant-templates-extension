@@ -17,8 +17,8 @@
           - thead.order_header do
             %th.order{:style=>"width:9em"}= t('order')
     %tbody
-      - if current_objects.any?
-        - current_objects.each do |template|
+      - if @content_templates.any?
+        - @content_templates.each do |template|
           %tr[template]
             - render_region :tbody, :locals => {:template => template} do |tbody|
               - tbody.title_cell do
