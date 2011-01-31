@@ -8,12 +8,16 @@ class Admin::TemplatesController < ApplicationController
   make_resourceful do
     actions :index, :show, :new, :create, :edit, :update, :remove, :destroy
 
-    response_for(:show) do |format|
-      format.html { redirect_to edit_admin_template_url }
+    response_for(:show) do
+      redirect_to edit_admin_template_url
     end
 
-    response_for(:create, :update, :destroy, :destroy_fails) do |format|
-      format.html { redirect_to objects_path }
+    response_for(:create, :update) do
+      redirect_to params[:continue] ? edit_admin_template_url(current_object) : objects_path
+    end
+
+    response_for(:destroy, :destroy_fails) do
+      redirect_to objects_path
     end
   end
 
