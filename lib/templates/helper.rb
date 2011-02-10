@@ -59,7 +59,8 @@ module Templates::Helper
           content_tag :li, nil, :class => 'separator'
         else
           info = child.name.eql?("Page") ? "Add child as 'Blank Page'" : "Add child as '#{child.name}' Page"
-          content_tag :li, link_to(name_for[child], new_admin_page_child_path(page, :template => child), :title => info)
+          link = child.name.eql?("Page") ? name_for[child] : image('template') + ' ' + name_for[child]
+          content_tag :li, link_to(link, new_admin_page_child_path(page, :template => child), :title => info)
         end
       end
     end
