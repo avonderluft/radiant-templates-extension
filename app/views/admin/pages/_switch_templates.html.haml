@@ -7,3 +7,16 @@
         %li{:class => template == @content_template ? 'selected' : nil}= link_to_unless(template == @content_template, template.name.humanize.titleize, "?template=#{template.id}")
       %li{:class => @content_template.blank? ? 'selected' : nil}
         = link_to_unless(@content_template.blank?, "Blank Page", @page.id.nil? ? "?template=" : "?template=0")
+
+- content_for :page_css do
+  :sass
+    ul#template-chooser
+      list-style: none
+      li, li a
+        display: inline
+        padding: 0.3em
+        line-height: 2.0em
+        color: white
+        &.selected
+          font-weight: bold
+          font-size: 110%
