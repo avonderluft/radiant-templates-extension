@@ -1,21 +1,4 @@
-h1. Templates
-
-The Templates extension provides internal structure to Radiant pages which adds an extra layer
-of flexibility in Layout development.  This allows my one Layout to serve as a wireframe for the entire site, with many different page designs filling the "content well."  I now only need a single <r:content /> tag within the Layout to accomplish this.  Thus we simplify and ensure layout consistency in the creation of pages by the end user of the CMS.  
-
-h2. Requirements
-
-The current version of the Templates extension is intended for use with Radiant 0.9.1 or higher, since its UI was made to match the new "Blade" UI of Radiant 9.  It may work with earlier versions, but there are no guarantees.  The "radiant-0.7.1 branch":https://github.com/avonderluft/radiant-templates-extension/tree/radiant-0.7.1  works with Radiant >= 0.7.1 and < 0.9.
-
-h2. Version History
-
-* 1.0.0 - gemified by Andrew vonderLuft, March 2011
-* 0.9 - Radiant 0.9 Blade UI, i18n additions Andrew vonderLuft, January 2011 - 
-* -- Radiant 0.8 compatible, Andrew vonderLuft, May 2010
-* -- Refactored to standard structure under /admin, admin UI for Part Types added, backward compatibility to < 0.8, by Andrew vonderLuft, November 2009, 
-* -- Refactored by Sean Cribbs, August 2008
-* -- Radiant 0.7 Compatible, March 2009 ("radiant-0.7.1 branch":https://github.com/avonderluft/radiant-templates-extension/tree/radiant-0.7.1)
-* -- Created by Sean Cribbs, September 2007
+The Templates extension provides internal structure to Radiant pages, adding a layer of flexibility in Layout development.  This allows a single Layout to serve as a wireframe for the entire site, with many different template page designs filling the "content well."  Using templates, you now only need a single <r:content /> tag within the Layout.  Thus we simplify and ensure layout consistency in the creation of pages by the end user of the CMS.  
 
 h2. Usage
 
@@ -93,8 +76,4 @@ Each Part type has Name and Field Type (e.g. radio_button, or text_field).  They
 
 Normally new part types would only be created to refine display characteristics.  For example, you might want a "Small Textarea" part type, which would be exactly the same as the default "Plain Textarea" part type, except that Field Style would have "height:80px".
 
-h2. Acknowledgments
 
-Thanks to Digital Pulp for funding the initial development of this extension
-for use in the Redken project, and to Con-way for funding further
-development.
