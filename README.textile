@@ -17,6 +17,29 @@ h2. Version History
 * -- Radiant 0.7 Compatible, March 2009 ("radiant-0.7.1 branch":https://github.com/avonderluft/radiant-templates-extension/tree/radiant-0.7.1)
 * -- Created by Sean Cribbs, September 2007
 
+h3. Installation
+
+h4. From github:
+
+* From your Radiant root run:
+
+<pre>git clone git://github.com/avonderluft/radiant-templates-extension.git ./vendor/extensions/templates
+rake radiant:extensions:templates:migrate
+rake radiant:extensions:templates:update
+</pre>
+
+* Restart your radiant app, and you should be good to go.
+
+h4. Using the gem
+
+* Install the gem
+
+<pre>gem install radiant-concurrent_draft-extension</pre>
+
+* Update your Radiant config:  add to environment.rb with other gem.configs
+
+<pre>config.gem 'radiant-concurrent_draft-extension', :lib => false</pre>
+
 h2. Usage
 
 h3. Creating a template
