@@ -33,10 +33,16 @@ module Templates::Helper
         field_html << text_field_tag(field_name, h(part_content), options)
 
       when "radio_button"
+        options[:style] = "display:inline;margin-left:1em;"
+        options [:style] << template_part.part_type.field_styles if template_part.part_type.field_styles
+        field_html << "<span>"
         options[:id] = "#{field_id}_true"
-        field_html << " &mdash; " + radio_button_tag(field_name, "true", part_content =~ /true/, options) + label_tag("True")
+        field_html << "&mdash;" + radio_button_tag(field_name, "true", part_content =~ /true/, options)
+        field_html << label_tag("True",nil,:style=>"display:inline;")
         options[:id] = "#{field_id}_false"
-        field_html << radio_button_tag(field_name, "false", part_content !~ /true/, options) + label_tag("False")
+        field_html << radio_button_tag(field_name, "false", part_content !~ /true/, options)
+        field_html << label_tag("False",nil,:style=>"display:inline;")
+        field_html << "</span>"
 
       when "hidden"
         field_html << hidden_field_tag(field_name, part_content, options)
