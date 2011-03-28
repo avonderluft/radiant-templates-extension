@@ -8,7 +8,7 @@
       = edit_template_part.name.humanize
       - unless edit_template_part.description.blank?
         %span.description= " - " + escape_once(edit_template_part.description)
-      - if edit_template_part.part_type.field_class.include?('text')
+      - if edit_template_part.part_type.field_class && edit_template_part.part_type.field_class.include?('text')
         %span.reference_links{:style => "float:right"}
           = t('reference')
           - unless edit_template_part.filter_id.blank?
