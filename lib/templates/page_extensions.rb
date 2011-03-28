@@ -5,7 +5,7 @@ module Templates::PageExtensions
       before_save :match_with_template
 
       def allowed_children
-        [default_child, Template.all].flatten.select
+        [default_child, Template.all].flatten
       end
 
     end
