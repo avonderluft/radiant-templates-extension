@@ -2,9 +2,9 @@
 require_dependency 'application_controller'
 
 class TemplatesExtension < Radiant::Extension
-  version "0.9"
+  version "#{File.read(File.expand_path(File.dirname(__FILE__)) + '/VERSION')}"
   description "Imposes structure on pages via content templates"
-  url "http://github.com/avonderluft/radiant-templates-extension/tree/master"
+  url "https://github.com/avonderluft/radiant-templates-extension/tree/master"
 
   def activate
     begin
