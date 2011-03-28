@@ -13,7 +13,7 @@
       %label{:for => "template_template_parts_#{template_part.index}_filter_id"} t('filter')
       = t.select :filter_id, [['<none>', '']] + TextFilter.descendants.map { |s| s.filter_name }.sort, :id => "template template_parts_#{template_part.index}_filter_id"
     %td.modify
-      = link_to_function image("remove", :alt => "Remove part"), "$('template_part_#{template_part.index}').remove();"
+      = link_to_function image('minus') + ' ' + t('remove'), "$('template_part_#{template_part.index}').remove();", :class => "action"
     %td.reorder
       = link_to_function image('move_to_top', :alt => "Move to top"), "reorder_template_part(this, 'top');"
       = link_to_function image('move_higher', :alt => "Move up"), "reorder_template_part(this, 'up');"
