@@ -1,18 +1,20 @@
-All the code in this directory comes from the rspec_on_rails plugin.
+All the code in this directory comes from the rspec-rails plugin.
 We've pilfered it as needed to make the make_resourceful specs easier to write.
 It was made available by its authors under the following license terms:
 
+(The MIT License)
+
 ====================================================================
-== RSpec
-Copyright (c) 2005-2007 The RSpec Development Team
+==== RSpec, RSpec-Rails
+Copyright (c) 2005-2008 The RSpec Development Team
 ====================================================================
-== ARTS
+==== ARTS
 Copyright (c) 2006 Kevin Clark, Jake Howerton
 ====================================================================
-== ZenTest
+==== ZenTest
 Copyright (c) 2001-2006 Ryan Davis, Eric Hodel, Zen Spider Software
 ====================================================================
-== AssertSelect
+==== AssertSelect
 Copyright (c) 2006 Assaf Arkin
 ====================================================================
 

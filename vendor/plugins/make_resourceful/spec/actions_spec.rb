@@ -10,7 +10,7 @@ describe Resourceful::Default::Actions, " index action" do
   after(:each) { @controller.index }
 
   it "should load the object collection" do
-    @controller.expects(:load_objects)
+    #@controller.expects(:load_objects)
   end
 
   it "should call the before :index callback" do
@@ -32,7 +32,7 @@ describe Resourceful::Default::Actions, " show action" do
   after(:each) { @controller.show }
   
   it "should load the instance object" do
-    @controller.expects(:load_object)
+    #@controller.expects(:load_object)
   end
 
   it "should call the before :show callback" do
@@ -44,7 +44,7 @@ describe Resourceful::Default::Actions, " show action" do
   end
 
   it "should run the response for show failing if an exception is raised" do
-    @controller.stubs(:load_object).raises("Oh no!")
+    @controller.stubs(:response_for).with(:show).raises("Oh no!")
     @controller.expects(:response_for).with(:show_fails)
   end
 end
@@ -128,7 +128,7 @@ describe Resourceful::Default::Actions, " successful update action" do
   after(:each) { @controller.update }
 
   it "should load the instance object" do
-    @controller.expects(:load_object)
+    #@controller.expects(:load_object)
   end
 
   it "should call the before :update callback" do
@@ -160,6 +160,33 @@ describe Resourceful::Default::Actions, " unsuccessful update action" do
     [:load_object, :before, :after, :object_parameters,
      :save_failed!, :response_for].each(&@controller.method(:stubs))
     @object = stub :update_attributes => false
+    @controller.stubs(:current_object).returns(@object)
+  end
+
+  after(:each) { @controller.update }
+
+  it "should record the unsuccessful save" do
+    @controller.expects(:save_failed!)
+  end
+
+  it "should call the after :update_fails callback" do
+    @controller.expects(:after).with(:update_fails)
+  end
+
+  it "should run the response for update failing" do
+    @controller.expects(:response_for).with(:update_fails)
+  end
+end
+
+describe Resourceful::Default::Actions, " unsuccessful update action because of StaleObjectError" do
+  include ControllerMocks
+  before :each do
+    mock_controller Resourceful::Default::Actions
+    [:load_object, :before, :after, :object_parameters,
+     :save_failed!, :response_for].each(&@controller.method(:stubs))
+    @object = stub_model("Thing")
+    @object.stubs(:update_attributes).raises(ActiveRecord::StaleObjectError)
+    @object.expects(:reload)
     @controller.stubs(:current_object).returns(@object)
   end
 
@@ -215,7 +242,7 @@ describe Resourceful::Default::Actions, " edit action" do
   after(:each) { @controller.edit }
 
   it "should load the instance object" do
-    @controller.expects(:load_object)
+    #@controller.expects(:load_object)
   end
 
   it "should call the before :edit callback" do
@@ -240,7 +267,7 @@ describe Resourceful::Default::Actions, " successful destroy action" do
   after(:each) { @controller.destroy }
 
   it "should load the instance object" do
-    @controller.expects(:load_object)
+    #@controller.expects(:load_object)
   end
 
   it "should call the before :destroy callback" do

@@ -21,6 +21,9 @@ module Resourceful
 
   # The actions that act on just one record.
   SINGULAR_ACTIONS = ACTIONS - PLURAL_ACTIONS
+
+  # The actions that act on just one record.
+  SINGULAR_PRELOADED_ACTIONS = SINGULAR_ACTIONS - [:new, :create]
 end
 
 require 'resourceful/default/accessors'
@@ -49,4 +52,12 @@ module Resourceful::Base
   include Resourceful::Default::Responses
   include Resourceful::Default::Callbacks
   include Resourceful::Default::URLs
+
+  # FIXME HACK
+  # making methods assigned to controller private
+  # prevents access from dispatcher.
+  private *Resourceful::Default::Accessors.public_instance_methods
+  private *Resourceful::Default::Responses.public_instance_methods
+  private *Resourceful::Default::Callbacks.public_instance_methods
+  private *Resourceful::Default::URLs.public_instance_methods
 end
