@@ -42,6 +42,5 @@
 - render_region :bottom do |bottom|
   - bottom.new_button do
     #actions
-      = pagination_for(@templates)
       %ul
         %li= link_to image('plus') + " " + t('new_template'), new_admin_template_url
