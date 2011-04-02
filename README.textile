@@ -96,9 +96,9 @@ h4. Creating a new page
 
 h4. Changing the template for an existing page
 
-* When editing the page, expand the meta drawer, by clicking 'More' underneath the Page Title.
-* You will see the current template bolded, and the others as links
-* To change to another template, simply select it, and save the page.
+* When editing a page, you will see the Template Selector at the top left, just to the right of the 'Edit Page header.
+* Click this to see all available templates
+* To change to another template, simply select it, and then save the page (Simply selecting it will not change it -- you must save the page).
 
 WARNING: For page parts of your old template, if your new template does a page parts of the same name, then that content will be lost.  This is a good reason to follow naming standards when creating templates, e.g. define a page part "main_content" for all your templates.
 

@@ -1,7 +1,7 @@
 .template_chooser
   %table.index
     %tr
-      %td.label Template >
+      %td.label Template Selector >
       %td.actions
         - @content_template ||= @page.template
         = link_to @page.template_name, "#template_choices", :class => "action dropdown"
