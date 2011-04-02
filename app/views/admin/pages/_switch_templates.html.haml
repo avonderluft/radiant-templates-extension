@@ -10,12 +10,12 @@
 
 - content_for :page_css do
   :sass
+    @import "compass/utilities/lists/inline-list"
     ul#template-chooser
-      list-style: none
+      +inline-list
       li, li a
-        display: inline
-        padding: 0.3em
-        line-height: 2.0em
+        padding: 0.2em
+        line-height: 1.5em
         color: white
         white-space: nowrap
         &.selected

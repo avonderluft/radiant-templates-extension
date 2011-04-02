@@ -1,0 +1,43 @@
+.template_chooser
+  %table.index
+    %tr
+      %td.label Template >
+      %td.actions
+        - @content_template ||= @page.template
+        = link_to @page.template_name, "#template_choices", :class => "action dropdown"
+        %ul.menu{:id => "template_choices"}
+          %li= link_to "Blank Page", @page.id.nil? ? "?template=" : "?template=0"
+          %li.separator
+          - ::Template.find(:all).each do |template|
+            %li= link_to image('template') + ' ' + template.name.humanize.titleize, "?template=#{template.id}"
+          %li{:class => @content_template.blank? ? 'selected' : nil}
+
+- content_for :page_css do
+  :sass
+    .template_chooser
+      float: left
+      background: #7E7E7E
+      table.index
+        margin: -2px 0 0 60px
+        border: none
+        tr, td.label, td.actions
+          border: none
+          padding: 0px
+          background: #7E7E7E
+        td.label
+          text-align: right
+          padding-right: 6px
+        td.actions
+          width: 178px
+          a.action, span.action.disabled
+            color: white
+            text-decoration: underline
+            margin: 0
+            &:hover
+              color: black
+              text-decoration: none
+              background: #eee image_url('admin/buttons_background.png') repeat-x
+            &.selected
+              color: black
+              text-decoration: none
+              background: #c5e0f5
