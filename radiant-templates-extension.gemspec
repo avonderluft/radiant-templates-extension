@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{radiant-templates-extension}
-  s.version = "1.0.0"
+  s.version = "1.0.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Andrew vonderLuft", "Sean Cribbs"]
-  s.date = %q{2011-03-28}
+  s.date = %q{2011-04-06}
   s.description = %q{Imposes structure on pages via content templates.}
   s.email = %q{avonderluft@avlux.net}
   s.extra_rdoc_files = [
@@ -30,6 +30,7 @@ Gem::Specification.new do |s|
     "app/views/admin/pages/_edit_template.html.haml",
     "app/views/admin/pages/_edit_template_part.html.haml",
     "app/views/admin/pages/_switch_templates.html.haml",
+    "app/views/admin/pages/_template_chooser.html.haml",
     "app/views/admin/pages/_template_column.html.haml",
     "app/views/admin/pages/_template_column_header.html.haml",
     "app/views/admin/part_types/_form.html.haml",
@@ -67,6 +68,7 @@ Gem::Specification.new do |s|
     "lib/templates/helper.rb",
     "lib/templates/page_extensions.rb",
     "lib/templates/tags.rb",
+    "pkg/radiant-templates-extension-1.0.0.gem",
     "public/images/admin/menu_arrow.png",
     "public/images/admin/move_higher.png",
     "public/images/admin/move_lower.png",
@@ -74,6 +76,7 @@ Gem::Specification.new do |s|
     "public/images/admin/move_to_top.png",
     "public/images/admin/part_type.png",
     "public/images/admin/template.png",
+    "radiant-templates-extension.gemspec",
     "spec/controllers/admin_page_controller_extensions_spec.rb",
     "spec/controllers/part_types_controller_spec.rb",
     "spec/controllers/templates_controller_spec.rb",
@@ -92,6 +95,7 @@ Gem::Specification.new do |s|
     "vendor/plugins/acts_as_list/init.rb",
     "vendor/plugins/acts_as_list/lib/active_record/acts/list.rb",
     "vendor/plugins/acts_as_list/test/list_test.rb",
+    "vendor/plugins/make_resourceful/.gitignore",
     "vendor/plugins/make_resourceful/DEFAULTS",
     "vendor/plugins/make_resourceful/LICENSE",
     "vendor/plugins/make_resourceful/README",
@@ -131,9 +135,9 @@ Gem::Specification.new do |s|
     "vendor/plugins/make_resourceful/spec/maker_spec.rb",
     "vendor/plugins/make_resourceful/spec/response_spec.rb",
     "vendor/plugins/make_resourceful/spec/responses_spec.rb",
-    "vendor/plugins/make_resourceful/spec/rspec_on_rails/LICENSE",
-    "vendor/plugins/make_resourceful/spec/rspec_on_rails/redirect_to.rb",
-    "vendor/plugins/make_resourceful/spec/rspec_on_rails/render_template.rb",
+    "vendor/plugins/make_resourceful/spec/rspec-rails/LICENSE",
+    "vendor/plugins/make_resourceful/spec/rspec-rails/redirect_to.rb",
+    "vendor/plugins/make_resourceful/spec/rspec-rails/render_template.rb",
     "vendor/plugins/make_resourceful/spec/serialize_spec.rb",
     "vendor/plugins/make_resourceful/spec/spec_helper.rb",
     "vendor/plugins/make_resourceful/spec/urls_spec.rb"
@@ -161,12 +165,12 @@ Gem::Specification.new do |s|
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
-      s.add_runtime_dependency(%q<radiant>, [">= 0.9.1"])
+      s.add_runtime_dependency(%q<radiant>, [">= 1.0.0"])
     else
-      s.add_dependency(%q<radiant>, [">= 0.9.1"])
+      s.add_dependency(%q<radiant>, [">= 1.0.0"])
     end
   else
-    s.add_dependency(%q<radiant>, [">= 0.9.1"])
+    s.add_dependency(%q<radiant>, [">= 1.0.0"])
   end
 end
 
