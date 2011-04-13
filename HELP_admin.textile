@@ -1,0 +1,19 @@
+The Templates extension provides internal structure to Radiant pages, adding a layer of flexibility in Layout development.  This allows a single Layout to serve as a wireframe for the entire site, with many different template page designs filling the "content well."  Using templates, you now only need a single <r:content /> tag within the Layout.  Thus we simplify and ensure layout consistency in the creation of pages by the end user of the CMS.  
+
+h2. Usage
+
+See "Template Help for Designing":/admin/help/extension/templates/designer
+
+h2. Template Part Types
+
+h3. Access
+
+Only Admin users have access to create and edit part types.  Default part types should not be removed.  Care should be taken in editing them, since any change to part type will affect every template which uses it, and hence potentially every page which is built with any of those templates.
+
+h3. Management
+
+Each Part type has Name and Field Type (e.g. radio_button, or text_field).  They also have optional Field Class and Field Style, by which the admin user can alter the display characteristics of the parts to the page editors.  
+
+Normally new part types would only be created to refine display characteristics.  For example, you might want a "Small Textarea" part type, which would be exactly the same as the default "Plain Textarea" part type, except that Field Style would have "height:80px".
+
+

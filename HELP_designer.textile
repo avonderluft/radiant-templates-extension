@@ -61,19 +61,3 @@ h4. Changing the template for an existing page
 * To change to another template, simply select it, and then save the page (Simply selecting it will not change it -- you must save the page).
 
 WARNING: For page parts of your old template, if your new template does a page parts of the same name, then that content will be lost.  This is a good reason to follow naming standards when creating templates, e.g. define a page part "main_content" for all your templates.
-
-h2. Admin
-
-h3. Template Part Types (Admin users only)
-
-h4. Access
-
-Only Admin users have access to create and edit part types.  Default part types should not be removed.  Care should be taken in editing them, since any change to part type will affect every template which uses it, and hence potentially every page which is built with any of those templates.
-
-h4. Management
-
-Each Part type has Name and Field Type (e.g. radio_button, or text_field).  They also have optional Field Class and Field Style, by which the admin user can alter the display characteristics of the parts to the page editors.  
-
-Normally new part types would only be created to refine display characteristics.  For example, you might want a "Small Textarea" part type, which would be exactly the same as the default "Plain Textarea" part type, except that Field Style would have "height:80px".
-
-
