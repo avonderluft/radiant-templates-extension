@@ -3,11 +3,9 @@ module Templates::PageExtensions
   def self.included(base)
     base.class_eval do
       before_save :match_with_template
-
       def allowed_children
         [default_child, Template.all].flatten
       end
-
     end
   end
 

@@ -54,6 +54,10 @@ module Templates::Helper
     field_html.join("\n")
   end
 
+  def children_for(page)
+    page.allowed_children
+  end
+
   def child_menu_for(page)
     children = children_for(page)
     return nil if children.size < 2
