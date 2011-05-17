@@ -43,7 +43,7 @@ class TemplatesExtension < Radiant::Extension
   end
 
   def load_default_template_regions
-    returning OpenStruct.new do |template|
+    OpenStruct.new.tap do |template|
       template.edit = Radiant::AdminUI::RegionSet.new do |edit|
         edit.main.concat %w{edit_header edit_form}
         edit.form.concat %w{edit_title edit_content}
@@ -62,7 +62,7 @@ class TemplatesExtension < Radiant::Extension
   end
 
   def load_default_part_type_regions
-    returning OpenStruct.new do |part_type|
+    OpenStruct.new.tap do |part_type|
       part_type.edit = Radiant::AdminUI::RegionSet.new do |edit|
         edit.main.concat %w{edit_header edit_form}
         edit.form.concat %w{edit_title edit_content}
