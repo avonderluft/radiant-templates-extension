@@ -27,10 +27,10 @@ module Templates::Helper
 
     case template_part.part_type.field_type
       when "text_area"
-        field_html << text_area_tag(field_name, h(part_content), options)
+        field_html << text_area_tag(field_name, part_content, options)
 
       when "text_field"
-        field_html << text_field_tag(field_name, h(part_content), options)
+        field_html << text_field_tag(field_name, part_content, options)
 
       when "radio_button"
         options[:style] = "display:inline;margin-left:1em;"
