@@ -54,23 +54,24 @@ module Templates::Helper
     field_html.join("\n")
   end
 
-  def children_for(page)
-    page.allowed_children
-  end
-
   def child_menu_for(page)
     children = children_for(page)
+    templates = Template.all
+    unless children.size == 0 || templates.empty?
+      children << templates.unshift(:separator)
+      children.flatten!
+    end
     return nil if children.size < 2
     children.unshift(children.delete(page.default_child), :separator) if children.include?(page.default_child)
-    name_for = proc { |p| (name = p.name.to_name('Page')).blank? ? t('blank_page') : name }
+    name_for = proc { |p| (name = p.name.to_name('Page')).blank? ? t('normal_page') : name }
     content_tag :ul, :class => 'menu', :id => "allowed_children_#{page.id}" do
       children.map do |child|
         if child == :separator
           content_tag :li, nil, :class => 'separator'
+        elsif child.is_a?(Template)
+          content_tag :li, link_to(image('template') + ' ' + child.name, new_admin_page_child_path(page, :template => child), :title => "Add child using #{child.name} Template")
         else
-          info = child.name.eql?("Page") ? "Add child as 'Blank Page'" : "Add child as '#{child.name}' Page"
-          link = child.name.eql?("Page") ? name_for[child] : image('template') + ' ' + name_for[child]
-          content_tag :li, link_to(link, new_admin_page_child_path(page, :template => child), :title => info)
+          content_tag :li, link_to(name_for[child], new_admin_page_child_path(page, :page_class => child), :title => clean_page_description(child))
         end
       end
     end
