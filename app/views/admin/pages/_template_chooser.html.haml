@@ -4,9 +4,10 @@
       %td.label Template Selector >
       %td.actions
         - @content_template ||= @page.template
-        = link_to @page.template_name, "#template_choices", :class => "action dropdown"
+        - name = @page.id ? @page.template_name : ::Template.find(params[:template]).name rescue t('normal_page')
+        = link_to name, "#template_choices", :class => "action dropdown"
         %ul.menu{:id => "template_choices"}
-          %li= link_to "Blank Page", @page.id.nil? ? "?template=" : "?template=0"
+          %li= link_to t('normal_page'), @page.id.nil? ? "?template=" : "?template=0"
           %li.separator
           - ::Template.find(:all).each do |template|
             %li= link_to image('template') + ' ' + template.name.humanize.titleize, "?template=#{template.id}"
