@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../spec_helper'
+require 'spec_helper'
 
 # We only have this spec because setting up an isolated view spec would be too
 # complicated.  Instead we have a quasi-integration test.

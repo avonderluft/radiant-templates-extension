@@ -125,7 +125,7 @@ module Resourceful
         @current_object = if current_model.respond_to? :build
           current_model.build(object_parameters)
         else
-          returning(current_model.new(object_parameters)) do |obj|
+          current_model.new(object_parameters).tap do |obj|
             if singular? && parent?
               obj.send("#{parent_name}_id=", parent_object.id)
               obj.send("#{parent_name}_type=", parent_object.class.to_s) if polymorphic_parent?
