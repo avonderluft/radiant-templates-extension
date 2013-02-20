@@ -4,14 +4,14 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
-  s.name = %q{radiant-templates-extension}
-  s.version = "1.0.6"
+  s.name = "radiant-templates-extension"
+  s.version = "1.0.7"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Andrew vonderLuft", "Sean Cribbs"]
-  s.date = %q{2011-07-19}
-  s.description = %q{Imposes structure on pages via content templates.}
-  s.email = %q{avonderluft@avlux.net}
+  s.date = "2013-02-20"
+  s.description = "Imposes structure on pages via content templates."
+  s.email = "avonderluft@avlux.net"
   s.extra_rdoc_files = [
     "README.textile"
   ]
@@ -142,24 +142,10 @@ Gem::Specification.new do |s|
     "vendor/plugins/make_resourceful/spec/spec_helper.rb",
     "vendor/plugins/make_resourceful/spec/urls_spec.rb"
   ]
-  s.homepage = %q{https://github.com/avonderluft/radiant-templates-extension}
+  s.homepage = "https://github.com/avonderluft/radiant-templates-extension"
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.5.2}
-  s.summary = %q{Templates Extension for Radiant CMS}
-  s.test_files = [
-    "spec/controllers/admin_page_controller_extensions_spec.rb",
-    "spec/controllers/part_types_controller_spec.rb",
-    "spec/controllers/templates_controller_spec.rb",
-    "spec/datasets/part_types_dataset.rb",
-    "spec/datasets/templates_dataset.rb",
-    "spec/helpers/templates_helper_spec.rb",
-    "spec/models/page_extensions_spec.rb",
-    "spec/models/part_type_spec.rb",
-    "spec/models/tags_spec.rb",
-    "spec/models/template_part_spec.rb",
-    "spec/models/template_spec.rb",
-    "spec/spec_helper.rb"
-  ]
+  s.rubygems_version = "1.8.24"
+  s.summary = "Templates Extension for Radiant CMS"
 
   if s.respond_to? :specification_version then
     s.specification_version = 3

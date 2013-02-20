@@ -9,6 +9,7 @@ The current version of the Templates extension is intended for use with Radiant 
 
 h2. Version History
 
+* 1.0.7 - fixed spec deprecations, confirmed compatible with Radiant 1.1.3
 * 1.0.0 - gemified by Andrew vonderLuft, March 2011
 * 0.9 - Radiant 0.9 Blade UI, i18n additions Andrew vonderLuft, January 2011 - 
 * -- Radiant 0.8 compatible, Andrew vonderLuft, May 2010
@@ -17,9 +18,22 @@ h2. Version History
 * -- Radiant 0.7 Compatible, March 2009 ("radiant-0.7.1 branch":https://github.com/avonderluft/radiant-templates-extension/tree/radiant-0.7.1)
 * -- Created by Sean Cribbs, September 2007
 
+h3. To do
+
+* add template selectors to Add Child dropdown in Admin Page index
+
 h3. Installation
 
-h4. From github:
+h4. Using bundler
+
+* add radiant-templates-extension to your Gemfile and run `bundle`
+
+<pre>
+rake radiant:extensions:templates:migrate
+rake radiant:extensions:templates:update
+</pre>
+
+h4. From github
 
 * From your Radiant root run:
 
@@ -29,16 +43,6 @@ rake radiant:extensions:templates:update
 </pre>
 
 * Restart your radiant app, and you should be good to go.
-
-h4. Using the gem
-
-* Install the gem
-
-<pre>gem install radiant-concurrent_draft-extension</pre>
-
-* Update your Radiant config:  add to environment.rb with other gem.configs
-
-<pre>config.gem 'radiant-concurrent_draft-extension', :lib => false</pre>
 
 h2. Usage
 
