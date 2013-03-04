@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "radiant-templates-extension"
-  s.version = "1.0.7"
+  s.version = "1.0.8"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Andrew vonderLuft", "Sean Cribbs"]
-  s.date = "2013-02-20"
+  s.date = "2013-03-04"
   s.description = "Imposes structure on pages via content templates."
   s.email = "avonderluft@avlux.net"
   s.extra_rdoc_files = [
@@ -144,7 +144,7 @@ Gem::Specification.new do |s|
   ]
   s.homepage = "https://github.com/avonderluft/radiant-templates-extension"
   s.require_paths = ["lib"]
-  s.rubygems_version = "1.8.24"
+  s.rubygems_version = "1.8.25"
   s.summary = "Templates Extension for Radiant CMS"
 
   if s.respond_to? :specification_version then
