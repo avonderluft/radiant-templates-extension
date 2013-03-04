@@ -54,6 +54,7 @@ module Templates::Helper
     field_html.join("\n")
   end
 
+  # For Radiant before MenuRenderer implemented
   def child_menu_for(page)
     children = children_for(page)
     templates = Template.all
@@ -74,6 +75,23 @@ module Templates::Helper
           content_tag :li, link_to(name_for[child], new_admin_page_child_path(page, :page_class => child), :title => clean_page_description(child))
         end
       end
+    end
+  end
+  
+  # For Radiant after MenuRenderer implemented
+  MenuRenderer.module_eval do
+    def template_items
+      result = []
+      Template.all.each { |template| result <<  template_item(template) }.compact
+      result
+    end
+    def template_item(template)
+      title = "Add child using '#{template.name}' Template"
+      path = new_admin_page_child_path(self, :template => template)
+      view.content_tag :li, view.link_to(view.image('template') + ' ' + template.name, path, :title => title )
+    end
+    def menu_items
+      template_items + [separator_item, default_child_item] + child_items
     end
   end
 
